@@ -1,5 +1,5 @@
 def main():
-    with open("seed_map.txt", "r") as f:
+    with open("../../input/day5/seed_map.txt", "r") as f:
         seed_map = f.read()
 #    with open("test_seed_to.txt", "r") as f:
 #        seed_map = f.read()

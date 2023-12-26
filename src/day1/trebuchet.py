@@ -1,5 +1,5 @@
 def main():
-    with open("calib.txt", "r") as f:
+    with open("../../input/day1/calib.txt", "r") as f:
         text = f.read()
         sum_ = get_sum(text)
     print(f"First sum is {sum_}")

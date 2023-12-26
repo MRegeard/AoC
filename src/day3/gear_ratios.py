@@ -1,6 +1,6 @@
 def main_1():
     sum_ = 0
-    with open('gear.txt', 'r') as f:
+    with open('../../input/day3/gear.txt', 'r') as f:
         data = f.read()
         grid = [[e for e in line] for line in data.split('\n')]
         number = 0
@@ -30,7 +30,7 @@ def main_1():
 
 def main_2():
     sum_ = 0
-    with open('gear.txt', 'r') as f:
+    with open('../../input/day3/gear.txt', 'r') as f:
         data = f.read()
         grid = [[e for e in line] for line in data.split('\n')]
         for l in range(len(grid)):
