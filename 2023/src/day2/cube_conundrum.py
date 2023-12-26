@@ -4,7 +4,7 @@ def main():
     max_blue = 14
     game_sum = 0
     game_power = 0
-    with open("game.txt", "r") as f:
+    with open("../../input/day2/game.txt", "r") as f:
         text = f.read()
         for line in text.split('\n'):
             draws = line.split(':')[1].split(';')

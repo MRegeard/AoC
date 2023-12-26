@@ -1,5 +1,5 @@
 def main():
-    with open("cards.txt", "r") as f:
+    with open("../../input/day4/cards.txt", "r") as f:
         data = f.read()
         sum_ = 0
         card_copy = {}
