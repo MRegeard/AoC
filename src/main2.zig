@@ -1,9 +1,7 @@
 const std = @import("std");
 
-
 pub fn main() !void {
-
-    var path_buffer : [std.fs.max_path_bytes]u8 = undefined;
+    var path_buffer: [std.fs.max_path_bytes]u8 = undefined;
     const path = try std.fs.realpath("input/input2.txt", &path_buffer);
 
     var arena_allocator = std.heap.ArenaAllocator.init(std.heap.page_allocator);
@@ -24,7 +22,6 @@ pub fn main() !void {
     const safe_report_2 = try secondPart(gpa, contents);
     try std.io.getStdOut().writer().print("2nd part, total is {}\n", .{safe_report_2});
 }
-
 
 pub fn secondPart(gpa: std.mem.Allocator, contents: []u8) !u32 {
     var safe_report: u32 = 0;
@@ -54,7 +51,6 @@ pub fn secondPart(gpa: std.mem.Allocator, contents: []u8) !u32 {
     return safe_report;
 }
 
-
 pub fn isok(list: []const u32, skip: usize) bool {
     var negdiff = false;
     var posdiff = false;
@@ -76,17 +72,15 @@ pub fn isok(list: []const u32, skip: usize) bool {
     return (!posdiff or !negdiff) and !baddiff;
 }
 
-
 pub fn firstPart(gpa: std.mem.Allocator, contents: []u8) !u32 {
-
-    var safe_report : u32 = 0;
+    var safe_report: u32 = 0;
 
     var lines = std.mem.tokenizeAny(u8, contents, "\n");
 
-    line_while: while(lines.next()) |line| {
+    line_while: while (lines.next()) |line| {
         var list = std.ArrayList(u32).init(gpa);
         var it = std.mem.tokenizeAny(u8, line, " ");
-        while(it.next()) |num| {
+        while (it.next()) |num| {
             const n = try std.fmt.parseInt(u32, num, 10);
             try list.append(n);
         }
@@ -96,13 +90,12 @@ pub fn firstPart(gpa: std.mem.Allocator, contents: []u8) !u32 {
         }
         if (std.sort.isSorted(u32, slice_sorted, {}, std.sort.asc(u32))) {
             for (0..(slice_sorted.len - 1)) |i| {
-                if (((slice_sorted[i+1] - slice_sorted[i]) > 3) or ((slice_sorted[i+1] - slice_sorted[i]) < 1)) {
+                if (((slice_sorted[i + 1] - slice_sorted[i]) > 3) or ((slice_sorted[i + 1] - slice_sorted[i]) < 1)) {
                     continue :line_while;
-                    }
                 }
+            }
             safe_report += 1;
         }
     }
     return safe_report;
 }
-
