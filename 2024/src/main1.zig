@@ -22,7 +22,6 @@ pub fn main() !void {
         std.log.err("Failed to read line: {s}", .{@errorName(err)});
         return err;
     }) |line| {
-        defer gpa.free(line);
         const int1 = try std.fmt.parseInt(u32, line[0..5], 10);
         const int2 = try std.fmt.parseInt(u32, line[8..], 10);
         try array_list1.append(int1);
