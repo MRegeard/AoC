@@ -13,24 +13,6 @@ const Direction = enum {
     SouthWest,
 };
 
-pub fn isvalidDir(dir: Direction, table: [][]const u8, i: usize, j: usize) bool {
-    const len_row = table[0].len;
-    const len_cols = table.len;
-    switch (dir) {
-        .East => return j <= len_row - 4,
-        .West => return j >= 3,
-        .North => return i >= 3,
-        .South => return i <= len_cols - 4,
-        .NorthEast => return (isvalidDir(Direction.East, table, i, j) and isvalidDir(Direction.North, table, i, j)),
-        .NorthWest => return (isvalidDir(Direction.West, table, i, j) and isvalidDir(Direction.North, table, i, j)),
-        .SouthEast => return (isvalidDir(Direction.East, table, i, j) and isvalidDir(Direction.South, table, i, j)),
-        .SouthWest => return (isvalidDir(Direction.West, table, i, j) and isvalidDir(Direction.South, table, i, j)),
-    }
-}
-
-pub fn isValidPos(table: [][]const u8, i: usize, j: usize) bool {
-    return (!((i == 0) or (j == 0) or (i == (table.len - 1)) or (j == (table[0].len - 1))) and (table[i][j] == 'A'));
-}
 
 pub fn main() !void {
     var path_buffer: [std.fs.max_path_bytes]u8 = undefined;
@@ -76,7 +58,6 @@ pub fn main() !void {
                 }
             }
             const is_valid_pos = isValidPos(table, row_idx, col_idx);
-            std.log.info("{} {}: {}\n", .{ row_idx, col_idx, is_valid_pos });
             if (is_valid_pos) {
                 counts2 += parseCrossMas(table, row_idx, col_idx);
             }
@@ -104,11 +85,8 @@ pub fn parseCrossMas(table: [][]const u8, i: usize, j: usize) u32 {
             const col_idx: i16 = jj + (kk - 1) * coord_add_j;
             const row_id: usize = @intCast(row_idx);
             const col_id: usize = @intCast(col_idx);
-            std.log.info("{} {}", .{ row_id, col_id });
-            std.log.info("{}", .{table[row_id][col_id]});
             compare1[k] = table[row_id][col_id];
         }
-        std.log.info("Compare is {s}", .{compare1});
         if (mem.eql(u8, pattern, &compare1)) {
             rotate(&coord_add_i, &coord_add_j);
             quarter_turn += 1;
@@ -120,7 +98,6 @@ pub fn parseCrossMas(table: [][]const u8, i: usize, j: usize) u32 {
                 const col_id: usize = @intCast(col_idx);
                 compare1[k] = table[@as(usize, row_id)][@as(usize, col_id)];
             }
-            std.log.info("Compare 2 is {s}", .{compare1});
             if (mem.eql(u8, pattern, &compare1)) {
                 return 1;
             }
@@ -173,4 +150,24 @@ pub fn parseXmas(dir: Direction, table: [][]const u8, i: usize, j: usize) u32 {
     } else {
         return 0;
     }
+}
+
+
+pub fn isvalidDir(dir: Direction, table: [][]const u8, i: usize, j: usize) bool {
+    const len_row = table[0].len;
+    const len_cols = table.len;
+    switch (dir) {
+        .East => return j <= len_row - 4,
+        .West => return j >= 3,
+        .North => return i >= 3,
+        .South => return i <= len_cols - 4,
+        .NorthEast => return (isvalidDir(Direction.East, table, i, j) and isvalidDir(Direction.North, table, i, j)),
+        .NorthWest => return (isvalidDir(Direction.West, table, i, j) and isvalidDir(Direction.North, table, i, j)),
+        .SouthEast => return (isvalidDir(Direction.East, table, i, j) and isvalidDir(Direction.South, table, i, j)),
+        .SouthWest => return (isvalidDir(Direction.West, table, i, j) and isvalidDir(Direction.South, table, i, j)),
+    }
+}
+
+pub fn isValidPos(table: [][]const u8, i: usize, j: usize) bool {
+    return (!((i == 0) or (j == 0) or (i == (table.len - 1)) or (j == (table[0].len - 1))) and (table[i][j] == 'A'));
 }
