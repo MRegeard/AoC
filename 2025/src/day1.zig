@@ -41,12 +41,10 @@ pub fn secondPart(r: *std.Io.Reader) !void {
     while (try r.takeDelimiter('\n')) |line| {
 //        line_counter += 1;
 //        if (line_counter == 20) break;
-        std.debug.print("Line is: {s}\n", .{ line });
         if (line[0] == 'R') {
             const overflowedPointer = pointer_position + try std.fmt.parseInt(u32, line[1..], 10);
             const overflowedPointerFloat: f64 = @floatFromInt(overflowedPointer);
             const addToZero: u32 = @intFromFloat(overflowedPointerFloat / 100.0);
-            std.debug.print("addToZero: {}\n", .{ addToZero });
             number_zero += addToZero;
             pointer_position = @mod(overflowedPointer, 100);
         }
@@ -59,7 +57,6 @@ pub fn secondPart(r: *std.Io.Reader) !void {
                 const overflowedPointer: i64 = @as(i64, pointer_position) - @as(i64, shift);
                 const overflowedPointerFloat: f64 = @floatFromInt(overflowedPointer);
                 const addToZero: u32 = @intFromFloat(@abs(overflowedPointerFloat) / 100.0);
-                std.debug.print("addToZero: {}\n", .{ addToZero});
                 if (pointer_position == 0) {
                     number_zero += addToZero;
                 }
