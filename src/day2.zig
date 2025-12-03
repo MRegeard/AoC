@@ -1,8 +1,6 @@
 const std = @import("std");
 
-
 pub fn day2() !void {
-
     const file = try std.fs.cwd().openFile("input/2025/day2_input.txt", .{});
     defer file.close();
 
@@ -42,7 +40,7 @@ fn secondPart(reader: *std.Io.Reader) !void {
                 continue;
             }
 
-            splitLoop: for (2..digitsLen+1) |split| {
+            splitLoop: for (2..digitsLen + 1) |split| {
                 if (digitsLen % split == 0) {
                     var list = try std.ArrayList(u64).initCapacity(allocator, split);
                     defer list.deinit(allocator);
@@ -55,7 +53,7 @@ fn secondPart(reader: *std.Io.Reader) !void {
             }
         }
     }
-    std.debug.print("SecondPart -- Invalid IDs sum: {}\n", .{ invalidIds });
+    std.debug.print("SecondPart -- Invalid IDs sum: {}\n", .{invalidIds});
 }
 
 fn ditigsToIntArray(digits: []const u8, list: *std.ArrayList(u64)) !void {
@@ -83,23 +81,21 @@ fn firstPart(reader: *std.Io.Reader) !void {
         const highBoundBytes = std.mem.trimEnd(u8, iter.next().?, "\n");
         const bound2 = try std.fmt.parseInt(u64, highBoundBytes, 10);
 
-        for (bound1..bound2+1) |idx| {
-
+        for (bound1..bound2 + 1) |idx| {
             const idxu64: u64 = @intCast(idx);
             var digitsBuf: [1000]u8 = undefined;
             const digits = intToDigits(&digitsBuf, idxu64);
             const digitsLen = digits.len;
 
             if (digitsLen % 2 == 0) {
-
-                const half1: u64 = digitsToInt(digits[0..digitsLen/2]);
-                const half2: u64 = digitsToInt(digits[digitsLen/2..]);
+                const half1: u64 = digitsToInt(digits[0 .. digitsLen / 2]);
+                const half2: u64 = digitsToInt(digits[digitsLen / 2 ..]);
 
                 if (half1 == half2) invalidIds += idxu64;
             }
         }
     }
-    std.debug.print("FirstPart -- Invalid IDs sum: {}\n", .{ invalidIds });
+    std.debug.print("FirstPart -- Invalid IDs sum: {}\n", .{invalidIds});
 }
 
 fn intToDigits(buf: []u8, x: u64) []u8 {
@@ -113,14 +109,16 @@ fn intToDigits(buf: []u8, x: u64) []u8 {
 
     while (n != 0) {
         i -= 1;
-        const nu8: u8 = @intCast(n % 10 );
+        const nu8: u8 = @intCast(n % 10);
         buf[i] = nu8;
         n /= 10;
     }
     return buf[i..];
 }
 
-fn digitsToInt(digits: []const u8,) u64 {
+fn digitsToInt(
+    digits: []const u8,
+) u64 {
     var res: u64 = 0;
 
     for (digits) |d| {
@@ -130,5 +128,5 @@ fn digitsToInt(digits: []const u8,) u64 {
         const add = res + d;
         res = add;
     }
-     return res;
+    return res;
 }
