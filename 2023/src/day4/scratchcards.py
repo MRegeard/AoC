@@ -1,12 +1,14 @@
 def main():
-    with open("../../input/day4/cards.txt", "r") as f:
+    with open("../../../input/2023/day4/cards.txt", "r") as f:
         data = f.read()
         sum_ = 0
         card_copy = {}
         proceed_card = 0
         for card_number, card in enumerate(data.split("\n")):
-            print("card is : ", card_number+1)
-            card_copy[f"card_{card_number + 1}"] = card_copy.get(f"card_{card_number + 1}", 0) + 1
+            print("card is : ", card_number + 1)
+            card_copy[f"card_{card_number + 1}"] = (
+                card_copy.get(f"card_{card_number + 1}", 0) + 1
+            )
             while card_copy.get(f"card_{card_number + 1}", 0) != 0:
                 proceed_card += 1
                 card_score = 0
@@ -21,11 +23,13 @@ def main():
                             card_score = card_score * 2
                         number_of_number += 1
                 sum_ += card_score
-                #print("card_score is: ", card_score)
-                #print("number of card is : ", number_of_number)
+                # print("card_score is: ", card_score)
+                # print("number of card is : ", number_of_number)
                 for i in range(number_of_number):
-                    card_copy[f"card_{card_number + 2 + i}"] = card_copy.get(f"card_{card_number + 2 + i}", 0) + 1
-                #print("card_copy is : ", card_copy)
+                    card_copy[f"card_{card_number + 2 + i}"] = (
+                        card_copy.get(f"card_{card_number + 2 + i}", 0) + 1
+                    )
+                # print("card_copy is : ", card_copy)
                 card_copy[f"card_{card_number + 1}"] -= 1
             print("total sum is : ", sum_)
             print("card_proceed is : ", proceed_card)
@@ -33,3 +37,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
