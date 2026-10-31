@@ -1,3 +1,7 @@
 .owner
 .zig-cache/
+*/.zig-cache/
+zig-out/
+*/zig-cache/
+
 input/
